@@ -24,6 +24,7 @@ angular.module('ion-google-place', [])
           scope.locations = [];
           var geocoder = new google.maps.Geocoder();
           var searchEventTimeout = undefined;
+          var onCancel;
 
           var POPUP_TPL = [
             '<div class="ion-google-place-container modal">',
@@ -126,11 +127,7 @@ angular.module('ion-google-place', [])
               }, 0);
             };
 
-            var removeKeyboardHideListener = function() {
-              window.removeEventListener('native.keyboardhide', onCancel);
-            };
-
-            var onCancel = function(e) {
+            onCancel = function(e) {
               scope.searchQuery = '';
               $ionicBackdrop.release();
               el.element.css('display', 'none');
@@ -193,6 +190,10 @@ angular.module('ion-google-place', [])
 
             removeKeyboardHideListener();
           });
+
+          function removeKeyboardHideListener() {
+            window.removeEventListener('native.keyboardhide', onCancel);
+          }
         }
       };
     }
