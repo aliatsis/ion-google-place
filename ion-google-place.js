@@ -16,7 +16,9 @@ angular.module('ion-google-place', [])
         scope: {
           ngModel: '=?',
           geocodeOptions: '=',
-          filteredTypes: '='
+          filteredTypes: '=',
+          onSelect: '&',
+          onCancel: '&'
         },
         link: function(scope, element, attrs, ngModel) {
           var unbindBackButtonAction;
@@ -68,6 +70,8 @@ angular.module('ion-google-place', [])
               }
 
               removeKeyboardHideListener();
+
+              scope.onSelect();
             };
 
             scope.$watch('searchQuery', function(query) {
@@ -138,6 +142,8 @@ angular.module('ion-google-place', [])
               }
 
               removeKeyboardHideListener();
+
+              scope.onCancel();
             };
 
             closeOnBackButton = function(e) {
